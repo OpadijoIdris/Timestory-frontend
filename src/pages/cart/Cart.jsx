@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCart, removeFromCart } from "../../api/cart.api";
 import { useCart } from "../../context/CartContext";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState({
@@ -80,8 +81,15 @@ const Cart = () => {
 
       <div className="mt-6 border-t pt-4 flex justify-between font-semibold">
         <span>Total</span>
-        <span>₦{cart.total}</span>
+        <span>₦{cart.totalPrice}</span>
+        
       </div>
+      <Link
+          to="/checkout"
+          className="block mt-4 bg-black text-white text-center py-3 rounded"
+        >
+          Proceed to Checkout
+      </Link>
     </div>
   );
 };

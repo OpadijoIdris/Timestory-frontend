@@ -21,7 +21,7 @@ const Navbar = () => {
 
           {/* Desktop Links */}
           <nav className="hidden md:flex items-center gap-6 text-sm">
-  <Link to="/products">Products</Link>
+  {user && user.role === 'admin' && <Link to="/admin/products">Products</Link>}
 
   {/* Cart (Desktop) */}
   <Link to="/cart" className="relative text-lg">
@@ -84,7 +84,7 @@ const Navbar = () => {
             {/* Links */}
             <nav className="flex flex-col gap-4 text-lg">
               <Link to="/" onClick={() => setOpen(false)}>Home</Link>
-              <Link to="/products" onClick={() => setOpen(false)}>Products</Link>
+              {user && user.role === 'admin' && <Link to="/admin/products" onClick={() => setOpen(false)}>Products</Link>}
               <Link to="/cart" onClick={() => setOpen(false)}>Cart</Link>
 
               {user ? (

@@ -28,10 +28,10 @@ const Home = () => {
   if(loading) return <p>Loading...</p>;
 
   return (
-    <div className="px-4 py-6">
-      <h1 className="text-xl font-semibold mb-4">Products</h1>
+    <div className="container mx-auto px-4 py-6">
+      <h1 className="text-2xl font-semibold mb-4 md:text-3xl">Products</h1>
       {products.length === 0 && <p>No products found</p>}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
         <ProductCard key={product._id} product={product}/>
       ))}

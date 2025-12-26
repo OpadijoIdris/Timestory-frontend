@@ -14,8 +14,8 @@ export const addToCart = async (productId, quantity) => {
 };
 
 export const getCart = async () => {
-    const res = await api.get("/cart");
-    return res.data;
+    const { data } = await api.get("/cart");
+    return data;
 };
 
 export const removeFromCart = async (productId) => {

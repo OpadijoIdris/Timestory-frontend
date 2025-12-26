@@ -1,7 +1,9 @@
 import { addToCart } from "../../api/cart.api";
 import { useCart } from "../../context/CartContext";
+import { useState } from "react";
 
 const ProductCard = ({ product }) => {
+    const [quantity, setQuantity] = useState(1);
   const { updateCartCount } = useCart();
 
   const imageUrl =
@@ -13,15 +15,16 @@ const ProductCard = ({ product }) => {
     try {
       await addToCart(product._id, 1);
       await updateCartCount();
+      setQuantity(1);
       // maybe show a toast notification
     } catch (err) {
-      console.error(err);
+        alert(err.response?.data?.message || "Failed to add to cart")
       // maybe show an error toast
     }
   };
 
   return (
-    <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+    <div className="bg-white rounded-lg border shadow-sm overflow-hidden flex flex-col">
       {/* Image */}
       <div className="aspect-square bg-gray-100">
         {imageUrl ? (
@@ -38,25 +41,64 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Content */}
-      <div className="p-3">
-        <h3 className="text-sm font-medium line-clamp-2">{product.name}</h3>
+      <div className="p-4 flex-1 flex flex-col">
+        <h3 className="text-base font-medium line-clamp-2 mb-2">{product.name}</h3>
 
-        <p className="text-sm font-semibold mt-1">
+        <p className="text-lg font-semibold mt-1">
           ₦{Number(product.price).toLocaleString()}
         </p>
 
+        <p
+        className={`text-sm mt-1 ${
+          product.stock > 0 ? "text-green-600" : "text-red-500"
+        }`}
+      >
+        {product.stock > 0
+          ? `${product.stock} in stock`
+          : "Out of stock"}
+      </p>
+
+      {/* Spacer to push button to the bottom */}
+      <div className="flex-grow" />
+
+      {/* Quantity Selector */}
+      {product.stock > 0 && (
+        <div className="flex items-center gap-3 mt-4">
+          <button
+            onClick={() => setQuantity(q => Math.max(1, q - 1))}
+            className="border h-8 w-8 rounded flex items-center justify-center text-lg"
+          >
+            −
+          </button>
+
+          <span className="text-lg">{quantity}</span>
+
+          <button
+            onClick={() =>
+              setQuantity(q => Math.min(product.stock, q + 1))
+            }
+            className="border h-8 w-8 rounded flex items-center justify-center text-lg"
+          >
+            +
+          </button>
+        </div>
+      )}
+
         <button
           onClick={handleAddToCart}
+          disabled={product.stock === 0}
           className="
-            mt-3
+            mt-4
             w-full
             bg-black
             text-white
             text-sm
-            py-2
+            py-2.5
             rounded-md
             active:scale-95
             transition
+            disabled:bg-gray-400
+            disabled:cursor-not-allowed
           "
         >
           Add to cart
