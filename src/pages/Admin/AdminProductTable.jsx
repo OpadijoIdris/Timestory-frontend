@@ -13,6 +13,18 @@ const AdminProductTable = () => {
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
 
+  // debounced search
+  const [searchInput, setSearchInput] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setSearch(searchInput);
+        setPage(1);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchInput]);
+
   const fetchProducts = async () => {
     setLoading(true);
     try {
@@ -69,10 +81,9 @@ const AdminProductTable = () => {
         <input
           type="text"
           placeholder="Search product..."
-          value={search}
+          value={searchInput}
           onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1);
+            setSearchInput(e.target.value);
           }}
           className="border px-3 py-2 rounded w-full md:w-1/3"
         />

@@ -18,6 +18,8 @@ import CreateProduct from "./pages/Admin/CreateProduct";
 import CreateCategory from "./pages/Admin/Categories/CreateCategory";
 import AdminProductTable from "./pages/Admin/AdminProductTable";
 import ProductDetailPage from "./pages/Admin/ProductDetailPage";
+import AdminOrders from "./pages/Admin/Order/AdminOrders";
+import AdminOrderDetails from "./pages/Admin/Order/AdminOrderDetails";
 // import Orders
 
 
@@ -79,6 +81,8 @@ function App() {
           <Route path="products/:id" element={<ProductDetailPage />} /> {/* /admin/products/:id */}
           <Route path="products/edit/:id" element={<CreateProduct />} /> {/* /admin/products/edit/:id */}
           <Route path="create-category"  element={<CreateCategory />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="orders/:id" element={<AdminOrderDetails />} />
           {/* Add other admin routes here */}
         </Route>
 
