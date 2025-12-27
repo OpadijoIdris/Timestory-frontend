@@ -5,7 +5,11 @@ import { getPurchaseSummary } from "../../api/order.api";
 
 const Dashboard = () => {
 
-  const [summary, setSummary] = useState(null)
+  const [summary, setSummary] = useState({
+    totalRevenue: 0,
+    totalOrders: onabort,
+    totalItemsSold: 0
+  })
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

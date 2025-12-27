@@ -21,6 +21,6 @@ export const getAdminOrderDetails = async (orderId) => {
 };
 
 export const updateOrderStatus = async (orderId, payload) => {
-    const res = await api.put(`/order/admin/${orderId}/status`, payload);
+    const res = await api.patch(`/order/admin/${orderId}/status`, payload);
     return res.data;
 };
