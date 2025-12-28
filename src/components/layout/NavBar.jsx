@@ -33,7 +33,7 @@ const Navbar = () => {
 
   {user ? (
     <>
-      <span className="text-gray-600">Hi, {user.name}</span>
+      <Link to="/user" className="text-gray-600">Hi, {user.name}</Link>
       <button
         onClick={logout}
         className="bg-black text-white px-3 py-1 rounded"
@@ -89,9 +89,9 @@ const Navbar = () => {
 
               {user ? (
                 <>
-                  <span className="text-sm text-gray-500">
+                  <Link to="/user" className="text-sm text-gray-500" onClick={() => setOpen(false)}>
                     Logged in as {user.name}
-                  </span>
+                  </Link>
                   <button
                     onClick={() => {
                       logout();

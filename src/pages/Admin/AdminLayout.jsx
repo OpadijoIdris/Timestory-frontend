@@ -12,9 +12,11 @@ const AdminLayout = () => {
         <nav className="space-y-3">
           <Link to="/admin" className="block" onClick={() => setSidebarOpen(false)}>Dashboard</Link>
           <Link to="/admin/products" className="block" onClick={() => setSidebarOpen(false)}>Create Product</Link>
+          <Link to="/admin/create-category" className="block" onClick={() => setSidebarOpen(false)}>Category</Link>
           <Link to="/admin/all-products" className="block" onClick={() => setSidebarOpen(false)}>View Products</Link>
           <Link to="/admin/orders" className="block" onClick={() => setSidebarOpen(false)}>Orders</Link>
-          <Link to="/admin/create-category" className="block" onClick={() => setSidebarOpen(false)}>Category</Link>
+          <Link to="/admin/get-users" className="block" onClick={() => setSidebarOpen(false)}>Users</Link>
+
         </nav>
       </aside>
 

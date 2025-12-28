@@ -9,8 +9,13 @@ import Checkout from "./pages/checkout/Checkout";
 import Paystack from "./pages/checkout/paystack";
 import OrderSuccess from "./pages/checkout/paymentSuccess";
 
-// Admin routes below 
+// User routes below;
+import UserLayout from "./pages/User/UserLayout";
+import UserOrders from "./pages/User/UserOrders";
+import UserOrderDetails from "./pages/User/UserOrderDetails";
+import UserDashboard from "./pages/User/UserDashboard";
 
+// Admin routes below 
 import AdminRoute from "./pages/Admin/AdminRoutes";
 import AdminLayout from "./pages/Admin/AdminLayout";
 import Dashboard from "./pages/Admin/Dashboard";
@@ -20,6 +25,7 @@ import AdminProductTable from "./pages/Admin/AdminProductTable";
 import ProductDetailPage from "./pages/Admin/ProductDetailPage";
 import AdminOrders from "./pages/Admin/Order/AdminOrders";
 import AdminOrderDetails from "./pages/Admin/Order/AdminOrderDetails";
+import AdminUsers from "./pages/Admin/Users/AdminUsers";
 // import Orders
 
 
@@ -69,6 +75,20 @@ function App() {
           }
         />
 
+        {/* User Routes */}
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <UserLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<UserDashboard />} />
+          <Route path="orders" element={<UserOrders />} />
+          <Route path="orders/:id" element={<UserOrderDetails />} />
+        </Route>
+
         {/* Admin Routes */}
         <Route path="/admin" element={
           <AdminRoute>
@@ -83,6 +103,7 @@ function App() {
           <Route path="create-category"  element={<CreateCategory />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="orders/:id" element={<AdminOrderDetails />} />
+          <Route path="get-users" element={<AdminUsers />} />
           {/* Add other admin routes here */}
         </Route>
 

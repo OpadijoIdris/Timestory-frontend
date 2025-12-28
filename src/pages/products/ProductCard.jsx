@@ -2,7 +2,7 @@ import { addToCart } from "../../api/cart.api";
 import { useCart } from "../../context/CartContext";
 import { useState } from "react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onPreview }) => {
     const [quantity, setQuantity] = useState(1);
   const { updateCartCount } = useCart();
 
@@ -26,11 +26,12 @@ const ProductCard = ({ product }) => {
   return (
     <div className="bg-white rounded-lg border shadow-sm overflow-hidden flex flex-col">
       {/* Image */}
-      <div className="aspect-square bg-gray-100">
+      <div className="aspect-square bg-gray-100 cursor-pointer">
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={product.name}
+            onClick={onPreview}
             className="w-full h-full object-cover"
           />
         ) : (

@@ -27,30 +27,30 @@ const AdminOrderDetails = () => {
   }, [id]);
 
   const handleStatusUpdate = async (newStatus) => {
-  setStatusUpdating(true);
-  try {
-    await updateOrderStatus(id, { orderStatus: newStatus }); // just pass orderStatus
-    await fetchOrder();
-  } catch (err) {
-    console.error(err);
-    alert("Failed to update order status");
-  } finally {
-    setStatusUpdating(false);
-  }
-};
+    setStatusUpdating(true);
+    try {
+      await updateOrderStatus(id, { orderStatus: newStatus });
+      await fetchOrder();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update order status");
+    } finally {
+      setStatusUpdating(false);
+    }
+  };
 
   const handlePaymentUpdate = async () => {
-  setPaymentUpdating(true);
-  try {
-    await updateOrderStatus(id, { paymentStatus: "paid" }); // for COD
-    await fetchOrder();
-  } catch (err) {
-    console.error(err);
-    alert("Failed to update payment status");
-  } finally {
-    setPaymentUpdating(false);
-  }
-};
+    setPaymentUpdating(true);
+    try {
+      await updateOrderStatus(id, { paymentStatus: "paid" });
+      await fetchOrder();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update payment status");
+    } finally {
+      setPaymentUpdating(false);
+    }
+  };
 
   if (loading) return <p>Loading order details...</p>;
   if (!order) return <p>Order not found.</p>;
@@ -139,24 +139,31 @@ const AdminOrderDetails = () => {
             {order.items.map((item, index) => (
               <tr key={index}>
                 <td className="p-2 border flex items-center gap-2">
-                  {item.product.images?.[0] ? (
-                    <img
-                      src={item.product.images[0]}
-                      alt={item.product.name}
-                      className="h-12 w-12 object-cover rounded"
-                    />
+                  {item.product ? (
+                    <>
+                      {item.product.images?.[0] ? (
+                        <img
+                          src={item.product.images[0]}
+                          alt={item.product.name}
+                          className="h-12 w-12 object-cover rounded"
+                        />
+                      ) : (
+                        <div className="h-12 w-12 bg-gray-200 flex items-center justify-center text-xs text-gray-500 rounded">
+                          No image
+                        </div>
+                      )}
+                      <span>{item.product.name}</span>
+                    </>
                   ) : (
-                    <div className="h-12 w-12 bg-gray-200 flex items-center justify-center text-xs text-gray-500 rounded">
-                      No image
-                    </div>
+                    <span className="text-red-500">Product deleted</span>
                   )}
-                  <span>{item.product.name}</span>
                 </td>
                 <td className="p-2 border">₦{item.price.toLocaleString()}</td>
                 <td className="p-2 border">{item.quantity}</td>
-                <td className="p-2 border">₦{(item.price * item.quantity).toLocaleString()}</td>
+                <td className="p-2 border">
+                  ₦{(item.price * item.quantity).toLocaleString()}
+                </td>
               </tr>
-
             ))}
           </tbody>
         </table>

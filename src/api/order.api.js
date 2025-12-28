@@ -1,5 +1,15 @@
 import api from "./axios";
 
+export const getMyOrders = async () => {
+    const res = await api.get("/order/my-orders");
+    return res.data;
+};
+
+export const getMyOrderDetails = async (orderId) => {
+    const res = await api.get(`/order/my-orders/${orderId}`);
+    return res.data;
+};
+
 export const checkoutCOD = async () => {
     const { data } = await api.post("/order/checkout/cod");
     return data;
