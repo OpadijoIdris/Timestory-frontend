@@ -5,6 +5,7 @@ import { useState } from "react";
 const ProductCard = ({ product, onPreview }) => {
     const [quantity, setQuantity] = useState(1);
   const { updateCartCount } = useCart();
+  const [loading, setLoading] = useState(false)
 
   const imageUrl =
     product.images && Array.isArray(product.images) && product.images.length > 0
@@ -12,16 +13,22 @@ const ProductCard = ({ product, onPreview }) => {
       : product.image;
 
   const handleAddToCart = async () => {
-    try {
-      await addToCart(product._id, 1);
-      await updateCartCount();
-      setQuantity(1);
-      // maybe show a toast notification
-    } catch (err) {
-        alert(err.response?.data?.message || "Failed to add to cart")
-      // maybe show an error toast
-    }
-  };
+  if (loading) return;
+
+  try {
+    setLoading(true);
+    await addToCart(product._id, quantity);
+    await updateCartCount();
+    setQuantity(1);
+  } catch (err) {
+    alert(
+      err.response?.data?.message ||
+      "Failed to add to cart"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="bg-white rounded-lg border shadow-sm overflow-hidden flex flex-col">
@@ -60,7 +67,7 @@ const ProductCard = ({ product, onPreview }) => {
       </p>
 
       {/* Spacer to push button to the bottom */}
-      <div className="flex-grow" />
+      <div className="grow" />
 
       {/* Quantity Selector */}
       {product.stock > 0 && (
@@ -87,7 +94,7 @@ const ProductCard = ({ product, onPreview }) => {
 
         <button
           onClick={handleAddToCart}
-          disabled={product.stock === 0}
+          disabled={product.stock === 0 || loading}
           className="
             mt-4
             w-full

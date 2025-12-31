@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 const CheckoutCOD = () => {
     const navigate = useNavigate();
     
-    placeOrder = async () => {
-        try{
-          await api.post("/order/checkout/cod");
-          navigate("/order-success");  
-        } catch (err) {
-            alert("Failed to place order");
-        }
+    const placeOrder = async () => {
+    try {
+      await api.post("/order/checkout/cod");
+      navigate("/order-success");
+    } catch (err) {
+      alert("Failed to place order");
     }
+  };
 
     return (
     <div className="p-6 text-center">
@@ -26,4 +26,6 @@ const CheckoutCOD = () => {
     )
 
 
-}
+};
+
+export default CheckoutCOD;

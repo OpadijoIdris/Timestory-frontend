@@ -47,6 +47,10 @@ export const getAdminProducts = async (params) => {
 
 export const getProduct = async (id) => {
     const res = await api.get(`/product/${id}`);
-    console.log('API response for getProduct:', res.data);
     return res.data;
 };
+
+export const getPublicProducts = async (params = {}) => {
+    const res = await api.get("/product/public", { params });
+    return res.data;
+}

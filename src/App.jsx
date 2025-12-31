@@ -7,6 +7,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
 import Paystack from "./pages/checkout/paystack";
+import PaystackCallBack from "./pages/checkout/PaystackCallback";
 import OrderSuccess from "./pages/checkout/paymentSuccess";
 
 // User routes below;
@@ -14,6 +15,7 @@ import UserLayout from "./pages/User/UserLayout";
 import UserOrders from "./pages/User/UserOrders";
 import UserOrderDetails from "./pages/User/UserOrderDetails";
 import UserDashboard from "./pages/User/UserDashboard";
+import ProductList from "./pages/products/ProductList";
 
 // Admin routes below 
 import AdminRoute from "./pages/Admin/AdminRoutes";
@@ -38,6 +40,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<ProductList />} />
 
         <Route
           path="/cart"
@@ -66,8 +69,17 @@ function App() {
           }
         />
 
+        <Route 
+          path="/paystack/callback"
+          element={
+            <ProtectedRoute>
+              <PaystackCallBack />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
-          path="/payment-success"
+          path="/order-success"
           element={
             <ProtectedRoute>
               <OrderSuccess />
