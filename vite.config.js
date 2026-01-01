@@ -14,6 +14,11 @@ export default defineConfig({
         changeOrigin: true,
         cookieDomainRewrite: ""
       }
-    }
+    },
+    allowedHosts: [
+      "localhost",
+      "127.0.0.1",
+      "imagistically-pseudoancestral-yuonne.ngrok-free.dev"
+    ]
   }
 })

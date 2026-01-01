@@ -4,46 +4,66 @@ import api from "../../api/axios";
 import { useCart } from "../../context/CartContext";
 
 const PaystackCallBack = () => {
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-    const { updateCartCount } = useCart;
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { updateCartCount } = useCart();
+  const [status, setStatus] = useState("verifying");
 
-    const [status, setStatus] = useState("Verifying");
-
-    useEffect(() => {
-        const reference = searchParams.get("reference");
-        if(!reference) {
-            navigate("/");
-            return;
-        }
-        const verifyPayment = async () => {
-            try{
-                const res = await api.get(`/order/paystack/verify?reference=${reference}`);
-
-                if(res.data.paymentStatus === "paid") {
-                    await updateCartCount();
-                    navigate("/order-success", {
-                        state: { orderId: res.data.orderId},
-                    }) 
-
-                } else {
-                    setTimeout(verifyPayment, 2000);
-                }
-                if(res.data.paymentStatus === "failed") {
-                    navigate("checkout?payment=failed");
-                    return;
-                }
-            } catch (err) {
-                status("failed")
-            }
-        }
-        verifyPayment();
-    }, []);
-
-    if(status === "failed") {
-        return <p className="p-4">Payment verification failed</p>
+  useEffect(() => {
+    const reference = searchParams.get("reference");
+    if (!reference) {
+      navigate("/");
+      return;
     }
-    return <p className="p-4">Verifying payment...</p>
-}
+
+    let attempts = 0;
+    const MAX_ATTEMPTS = 8;
+
+    const verifyPayment = async () => {
+      try {
+        const res = await api.get(
+          `/order/status?reference=${reference}`
+        );
+
+        if (res.data.paymentStatus === "paid") {
+          await updateCartCount();
+          navigate("/order-success", {
+            replace: true,
+            state: { orderId: res.data.orderId },
+          });
+          return;
+        }
+
+        if (res.data.paymentStatus === "failed") {
+          navigate("/checkout?payment=failed", { replace: true });
+          return;
+        }
+
+        // Still pending → retry
+        attempts++;
+        if (attempts < MAX_ATTEMPTS) {
+          setTimeout(verifyPayment, 2000);
+        } else {
+          setStatus("failed");
+        }
+      } catch (err) {
+        console.error("Verification error:", err);
+        setStatus("failed");
+      }
+    };
+
+    verifyPayment();
+  }, [searchParams, navigate, updateCartCount]);
+
+  if (status === "failed") {
+    return (
+      <p className="p-4 text-center">
+        Payment verification timed out. Please refresh or check your orders.
+      </p>
+    );
+  }
+
+  return <p className="p-4 text-center">Verifying payment...</p>;
+};
 
 export default PaystackCallBack;

@@ -62,28 +62,22 @@ function App() {
 
         <Route
           path="/paystack"
-          element={
-            <ProtectedRoute>
+          element={ 
               <Paystack />
-            </ProtectedRoute>
           }
         />
 
         <Route 
           path="/paystack/callback"
           element={
-            <ProtectedRoute>
               <PaystackCallBack />
-            </ProtectedRoute>
           }
         />
 
         <Route
           path="/order-success"
           element={
-            <ProtectedRoute>
-              <OrderSuccess />
-            </ProtectedRoute>
+              <OrderSuccess /> 
           }
         />
 
