@@ -20,7 +20,7 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(form);
-      navigate("/");
+      navigate("/verify-email");
     } catch (err) {
       // replace alert with toaster/snackbar later
       alert(err.response?.data?.message || "Registration failed");

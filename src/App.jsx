@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast"
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Home from "./pages/home";
@@ -10,6 +11,10 @@ import Paystack from "./pages/checkout/paystack";
 import PaystackCallBack from "./pages/checkout/PaystackCallback";
 import OrderSuccess from "./pages/checkout/paymentSuccess";
 import PaymentError from "./pages/checkout/paymentError";
+import VerifyEmail from "./pages/auth/VerifyEmail";
+import Settings from "./pages/auth/Settings";
+import ForgotPassword from "./pages/auth/ForgetPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 // User routes below;
 import UserLayout from "./pages/User/UserLayout";
@@ -42,6 +47,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductList />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
 
         <Route
           path="/cart"
@@ -99,6 +108,7 @@ function App() {
           <Route index element={<UserDashboard />} />
           <Route path="orders" element={<UserOrders />} />
           <Route path="orders/:id" element={<UserOrderDetails />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
 
         {/* Admin Routes */}
@@ -120,6 +130,7 @@ function App() {
         </Route>
 
       </Routes>
+      <Toaster position="top-right" />
     </BrowserRouter>
   );
 }

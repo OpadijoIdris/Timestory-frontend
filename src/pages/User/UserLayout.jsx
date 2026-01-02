@@ -51,6 +51,19 @@ const UserLayout = () => {
                 My Orders
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/user/settings"
+                className={({ isActive }) =>
+                  `block py-2 px-4 rounded ${
+                    isActive ? "bg-gray-700" : "hover:bg-gray-700"
+                  }`
+                }
+                onClick={() => isSidebarOpen && toggleSidebar()}
+              >
+                Settings
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </aside>
