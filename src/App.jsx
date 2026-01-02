@@ -9,6 +9,7 @@ import Checkout from "./pages/checkout/Checkout";
 import Paystack from "./pages/checkout/paystack";
 import PaystackCallBack from "./pages/checkout/PaystackCallback";
 import OrderSuccess from "./pages/checkout/paymentSuccess";
+import PaymentError from "./pages/checkout/paymentError";
 
 // User routes below;
 import UserLayout from "./pages/User/UserLayout";
@@ -75,11 +76,16 @@ function App() {
         />
 
         <Route
-          path="/order-success"
+          path="/payment-success"
           element={
               <OrderSuccess /> 
           }
         />
+        <Route 
+          path="/payment-error" 
+          element={<PaymentError />} 
+        />
+
 
         {/* User Routes */}
         <Route
