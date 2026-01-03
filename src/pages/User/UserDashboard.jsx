@@ -27,10 +27,10 @@ const UserDashboard = () => {
   // Derived stats
   const totalOrders = orders.length;
 
-  const totalSpent = orders.reduce(
-    (sum, order) => sum + (order.totalAmount || 0),
-    0
-  );
+  const totalSpent = orders
+  .filter(order => order.paymentStatus === "paid")
+  .reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+
 
   const lastOrderStatus = orders[0]?.orderStatus || "No orders yet";
 
