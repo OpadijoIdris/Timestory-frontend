@@ -12,6 +12,7 @@ const Register = () => {
     email: "",
     password: ""
   });
+  const [showPassword, setShowPassword] = useState(false); // ✅ new state
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,7 +23,6 @@ const Register = () => {
     try {
       await register(form);
       toast.success("Registration successful! Please verify your email.");
-      // Pass the email to VerifyEmail page
       navigate("/verify-email", { state: { email: form.email } });
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");
@@ -57,15 +57,25 @@ const Register = () => {
           required
         />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          required
-        />
+        {/* Password field with toggle */}
+        <div className="flex items-center border rounded">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="flex-1 p-2 outline-none"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="px-3 text-gray-600"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
 
         <button
           type="submit"

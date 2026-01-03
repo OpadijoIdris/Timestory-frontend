@@ -105,7 +105,10 @@ const AdminProductTable = () => {
 
       {/* TABLE */}
       {products.length === 0 ? (
-        <p>No products found</p>
+        <div>
+          <p>No products found</p>
+          <p>Or, check your internet connection and try again</p>
+        </div>
       ) : (
         <>
           <table className="min-w-full border border-gray-200">

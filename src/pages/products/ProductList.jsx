@@ -101,7 +101,13 @@ const ProductList = () => {
         </button>
       </div>
 
-      {products.length === 0 && <p>No products found</p>}
+      {products.length === 0 && 
+      <div>
+        <p>No products found</p>
+        <p className="font-extralight text-sm">Check your internet connection and try again</p>
+      </div>
+      
+      }
 
       {/* PRODUCT GRID */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

@@ -8,7 +8,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✅ new state
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,7 +17,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // start loading
+    setLoading(true);
     try {
       const res = await login(form);
       toast.success("Login successful!");
@@ -28,11 +29,9 @@ const Login = () => {
     } catch (err) {
       toast.error(err.response?.data.message || "Login failed");
     } finally {
-      // ✅ always reset loading, whether success or error
       setLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -52,15 +51,25 @@ const Login = () => {
           required
         />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          required
-        />
+        {/* Password field with toggle */}
+        <div className="flex items-center border rounded">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="flex-1 p-2 outline-none"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="px-3 text-gray-600"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
 
         <button
           type="submit"
