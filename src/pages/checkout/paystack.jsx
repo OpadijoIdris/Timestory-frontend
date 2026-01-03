@@ -1,34 +1,40 @@
-import { useEffect } from "react";
+import { useRef, useState } from "react";
 import api from "../../api/axios";
 
 const Paystack = () => {
-  useEffect(() => {
-    const initPayment = async () => {
-      try {
-        // Fetch cart first or pass it down as props
-        const cartRes = await api.get("/cart");
-        const cart = cartRes.data;
+  const [loading, setLoading] = useState(false);
+  const isPayingRef = useRef(false);
 
-        const res = await api.post("/order/checkout/paystack", {
-          userId: cart.userId,       // or from auth context
-          cart: {
-            items: cart.items,
-            totalPrice: cart.totalPrice,
-            userEmail: cart.userEmail, // must be included
-          },
-        });
+  const initPayment = async () => {
+    if (isPayingRef.current) return; 
+    isPayingRef.current = true;
+    setLoading(true);
 
-        window.location.href = res.data.authorization_url;
-      } catch (err) {
-        console.error(err);
-        alert("Payment initialization failed");
-      }
-    };
+    try {
+      const res = await api.post("/order/checkout/paystack");
 
-    initPayment();
-  }, []);
+      window.location.href = res.data.authorization_url;
+    } catch (err) {
+      console.error(err);
+      alert("Payment initialization failed");
+      isPayingRef.current = false;
+      setLoading(false);
+    }
+  };
 
-  return <p className="p-4">Redirecting to Paystack...</p>;
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <button
+        onClick={initPayment}
+        disabled={loading}
+        className="rounded-lg bg-indigo-600 px-6 py-3 text-white font-medium
+                   hover:bg-indigo-700 transition
+                   disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {loading ? "Redirecting..." : "Pay with Paystack"}
+      </button>
+    </div>
+  );
 };
 
 export default Paystack;

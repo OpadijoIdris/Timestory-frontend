@@ -1,24 +1,34 @@
+// src/pages/auth/VerifyEmail.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { verifyEmail, resendVerificationEmail } from "../../api/auth.api";
+import toast from "react-hot-toast";
 
 export default function VerifyEmail() {
-  const [email, setEmail] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email; // passed from Register
+
   const [code, setCode] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
+  if (!email) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-600">No email provided. Please register again.</p>
+      </div>
+    );
+  }
 
   const handleVerify = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const res = await verifyEmail({ email, code });
-      setMessage(res.message);
-      navigate("/");
+      toast.success(res.message || "Email verified successfully");
+      navigate("/login");
     } catch (err) {
-      setMessage(err.response?.data?.message || "Verification failed");
+      toast.error(err.response?.data?.message || "Verification failed");
     } finally {
       setLoading(false);
     }
@@ -28,101 +38,47 @@ export default function VerifyEmail() {
     setLoading(true);
     try {
       const res = await resendVerificationEmail({ email });
-      setMessage(res.message);
+      toast.success(res.message || "New code sent");
     } catch (err) {
-      setMessage(err.response?.data?.message || "Resend failed");
+      toast.error(err.response?.data?.message || "Resend failed");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSkip = () => {
-    navigate("/dashboard");
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-purple-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 sm:p-8">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Verify your email
-          </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            Enter the verification code sent to your email
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md bg-white p-6 shadow rounded space-y-4">
+        <h2 className="text-2xl font-bold text-center">Verify Email</h2>
 
-        {/* Form */}
         <form onSubmit={handleVerify} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email address
-            </label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Verification code
-            </label>
-            <input
-              type="text"
-              placeholder="Enter 6-digit code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              required
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-
+          <p className="text-sm text-gray-600">
+            Enter the code sent to <strong>{email}</strong>
+          </p>
+          <input
+            type="text"
+            placeholder="Verification code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            className="w-full border p-2 rounded"
+            required
+          />
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-indigo-600 py-2.5 text-white font-medium
-                       hover:bg-indigo-700 transition
-                       disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full bg-blue-600 text-white py-2 rounded"
           >
             {loading ? "Verifying..." : "Verify Email"}
           </button>
         </form>
 
-        {/* Actions */}
-        <div className="flex items-center justify-between mt-6">
-          <button
-            onClick={handleResend}
-            disabled={loading}
-            className="text-sm text-indigo-600 hover:text-indigo-700 font-medium
-                       disabled:opacity-60"
-          >
-            Resend code
-          </button>
-
-          <button
-            onClick={handleSkip}
-            className="text-sm text-gray-500 hover:text-gray-700"
-          >
-            Skip for now
-          </button>
-        </div>
-
-        {/* Message */}
-        {message && (
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-700 bg-gray-100 rounded-lg px-4 py-2">
-              {message}
-            </p>
-          </div>
-        )}
+        <button
+          onClick={handleResend}
+          disabled={loading}
+          className="w-full bg-gray-500 text-white py-2 rounded"
+        >
+          {loading ? "Resending..." : "Resend Code"}
+        </button>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ const Navbar = () => {
 
   {user ? (
     <>
-      <Link to="/user" className="text-gray-600">Hi, {user.name}</Link>
+      <Link to={user.role === 'admin' ? "/admin" : "/user"} className="text-gray-600">Hi, {user.name}</Link>
       <button
         onClick={logout}
         className="bg-black text-white px-3 py-1 rounded"
@@ -91,7 +91,7 @@ const Navbar = () => {
 
               {user ? (
                 <>
-                  <Link to="/user" className="text-sm text-gray-500" onClick={() => setOpen(false)}>
+                  <Link to={user.role === 'admin' ? "/admin" : "/user"} className="text-sm text-gray-500" onClick={() => setOpen(false)}>
                     Logged in as {user.name}
                   </Link>
                   <button

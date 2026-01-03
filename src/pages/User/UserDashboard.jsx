@@ -38,6 +38,16 @@ const UserDashboard = () => {
     <div>
       {/* WELCOME */}
       <h1 className="text-3xl font-bold mb-2">Welcome, {user?.name}!</h1>
+      {user?.isVerified ? (
+        <p className="text-green-600 mb-4">
+          Your email address is verified. You have full access to all features.
+        </p>
+      ) : (
+        <p className="text-red-600 mb-4">
+          Your email address is not verified. Please navigate to settings in your dashboard to verify
+          your account and unlock all features.
+        </p>
+      )}
       <p className="text-gray-600 mb-6">
         Track your orders and continue shopping.
       </p>

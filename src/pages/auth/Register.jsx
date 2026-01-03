@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const { register, loading } = useAuth();
@@ -20,10 +21,11 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(form);
-      navigate("/verify-email");
+      toast.success("Registration successful! Please verify your email.");
+      // Pass the email to VerifyEmail page
+      navigate("/verify-email", { state: { email: form.email } });
     } catch (err) {
-      // replace alert with toaster/snackbar later
-      alert(err.response?.data?.message || "Registration failed");
+      toast.error(err.response?.data?.message || "Registration failed");
     }
   };
 

@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const UserLayout = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = async () => {
+    await logout();       
+    navigate("/login");    
   };
 
   return (
@@ -64,9 +70,20 @@ const UserLayout = () => {
                 Settings
               </NavLink>
             </li>
+
+            {/* Logout just below Settings with extra spacing */}
+            <li className="mt-4">
+              <button
+                onClick={handleLogout}
+                className="w-full text-left py-2 px-4 rounded bg-red-600 hover:bg-red-700 text-white"
+              >
+                Logout
+              </button>
+            </li>
           </ul>
         </nav>
       </aside>
+
 
       {/* Main Content */}
       <main className="flex-1 md:ml-0">

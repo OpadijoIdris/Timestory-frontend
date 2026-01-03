@@ -15,6 +15,8 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import Settings from "./pages/auth/Settings";
 import ForgotPassword from "./pages/auth/ForgetPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import CategoryList from "./pages/Admin/Categories/CategoryList";
+import CodOrderSuccess from "./pages/checkout/CodOrderSuccess";
 
 // User routes below;
 import UserLayout from "./pages/User/UserLayout";
@@ -90,6 +92,10 @@ function App() {
               <OrderSuccess /> 
           }
         />
+        <Route
+          path="/order-success" 
+          element={<CodOrderSuccess />} 
+        />
         <Route 
           path="/payment-error" 
           element={<PaymentError />} 
@@ -126,6 +132,9 @@ function App() {
           <Route path="orders" element={<AdminOrders />} />
           <Route path="orders/:id" element={<AdminOrderDetails />} />
           <Route path="get-users" element={<AdminUsers />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="category-list" element={<CategoryList />} />
+
           {/* Add other admin routes here */}
         </Route>
 
