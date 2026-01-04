@@ -17,7 +17,7 @@ const Cart = () => {
         const res = await getCart();
         setCart(res.cart || res.data || res);
       } catch (err) {
-        console.error("Cart fetch error:", err);
+        console.error("Cart fetch error:", err.message || err);
       } finally {
         setLoading(false);
       }

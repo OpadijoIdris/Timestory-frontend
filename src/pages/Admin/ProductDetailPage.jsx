@@ -14,7 +14,7 @@ const ProductDetailPage = () => {
                 const res = await getProduct(id);
                 setProduct(res.data);
             } catch (err) {
-                console.error("Failed to fetch product:", err);
+                console.error("Failed to fetch product:", err.message || err);
             } finally {
                 setLoading(false);
             }

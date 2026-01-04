@@ -13,7 +13,7 @@ const UserOrderDetails = () => {
                 const res = await getMyOrderDetails(id);
                 setOrder(res.data);
             } catch (err) {
-                console.error(err)
+                console.error(err.message || err)
             } finally {
                 setLoading(false);
             }

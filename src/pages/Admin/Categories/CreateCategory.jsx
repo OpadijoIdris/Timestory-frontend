@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createCategory } from "../../../api/category.api";
+import toast from "react-hot-toast";
 
 const CreateCategory = () => {
   const [form, setForm] = useState({
@@ -19,10 +20,10 @@ const CreateCategory = () => {
 
     try {
       await createCategory(form);
-      alert("Category created successfully");
+      toast.success("Category created successfully");
       setForm({ name: "", description: "" });
     } catch (err) {
-      alert("Failed to create category");
+      toast.error("Something happened, category name exists");
     } finally {
       setLoading(false);
     }

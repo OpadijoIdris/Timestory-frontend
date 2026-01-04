@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getProducts, deleteProduct } from "../../api/product.api";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 const AdminProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -39,7 +41,7 @@ const AdminProductTable = () => {
       setProducts(res.data?.products || []);
       setTotalPages(res.data?.totalPages || 1);
     } catch (err) {
-      console.error("Failed to fetch products:", err);
+      console.error("Failed to fetch products:", err.message || err);
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,7 @@ const AdminProductTable = () => {
       await deleteProduct(productId);
       fetchProducts();
     } catch (err) {
-      alert("Failed to delete product.");
+      toast.error("Failed to delete product.");
     }
   };
 

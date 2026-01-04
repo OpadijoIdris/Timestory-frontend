@@ -35,7 +35,7 @@ const ProductList = () => {
       setProducts(res.product || []);
       setPagination(res.pagination || null);
     } catch (err) {
-      console.error(err);
+      console.error(err.message || err);
     } finally {
       setLoading(false);
     }

@@ -18,7 +18,7 @@ const CodOrderSuccess = () => {
         }
         await updateCartCount(); // ensures cart count updates
       } catch (err) {
-        console.error(err);
+        console.error(err.message || err);
       } finally {
         setLoading(false);
       }

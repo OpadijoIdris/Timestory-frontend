@@ -15,8 +15,8 @@ const Paystack = () => {
 
       window.location.href = res.data.authorization_url;
     } catch (err) {
-      console.error(err);
-      alert("Payment initialization failed");
+      console.error(err.message || err);
+      toast.error("Payment initialization failed");
       isPayingRef.current = false;
       setLoading(false);
     }

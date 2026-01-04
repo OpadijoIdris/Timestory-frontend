@@ -12,7 +12,7 @@ const UserOrders = () => {
                 const res = await getMyOrders();
                 setOrders(res.data || []);
             } catch (err) {
-                console.error(err)
+                console.error(err.message || err)
             } finally {
                 setLoading(false)
             }

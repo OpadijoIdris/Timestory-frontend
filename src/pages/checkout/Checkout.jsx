@@ -15,7 +15,7 @@ const Checkout = () => {
         const res = await getCart();
         setCart(res.data);
       } catch (err) {
-        console.error(err);
+        console.error(err.message || err);
       } finally {
         setLoading(false);
       }
@@ -32,7 +32,7 @@ const Checkout = () => {
         state: { orderId: res.orderId },
       });
     } catch (err) {
-      alert("Checkout failed");
+      toast.error("Checkout failed");
     } finally {
       setProcessing(false);
     }

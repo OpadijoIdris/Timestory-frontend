@@ -1,5 +1,6 @@
 import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CheckoutCOD = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const CheckoutCOD = () => {
       await api.post("/order/checkout/cod");
       navigate("/order-success");
     } catch (err) {
-      alert("Failed to place order");
+      toast.error("Failed to place order");
     }
   };
 

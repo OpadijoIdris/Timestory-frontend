@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAdminUsers } from "../../../api/users.api";
+import toast from "react-hot-toast";
 
 
 const AdminUsers = () => {
@@ -13,8 +14,8 @@ const AdminUsers = () => {
       const res = await getAdminUsers();
       setUsers(res.data || []);
     } catch (err) {
-      console.error("Failed to load users:", err);
-      alert("Failed to load users");
+      console.error("Failed to load users:", err.message || err);
+      toast.error("Failed to load users");
     } finally {
       setLoading(false);
     }

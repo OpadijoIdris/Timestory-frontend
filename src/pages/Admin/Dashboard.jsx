@@ -16,7 +16,7 @@ const Dashboard = () => {
         const res = await getPurchaseSummary();
         setSummary(res.data);
       } catch (err) {
-        console.error("Failed to load purchase summary", err);
+        console.error("Failed to load purchase summary", err.message || err);
       } finally {
         setLoading(false);
       }

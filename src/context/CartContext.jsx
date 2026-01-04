@@ -21,7 +21,7 @@ export const CartProvider = ({ children }) => {
                     setCartCount(0);
                 }
             } catch (error) {
-                console.error("Failed to fetch cart:", error);
+                console.error("Failed to fetch cart:", error.message || error);
                 setCart(null);
                 setCartCount(0);
             }

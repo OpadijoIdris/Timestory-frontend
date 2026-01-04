@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAdminOrders } from "../../../api/order.api";
+import toast from "react-hot-toast";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -23,8 +24,7 @@ const AdminOrders = () => {
       setOrders(res.data || []);
       setTotalPages(res.totalPages || 1);
     } catch (err) {
-      console.error(err);
-      alert("Failed to load orders");
+      toast.error("Failed to load orders");
     } finally {
       setLoading(false);
     }

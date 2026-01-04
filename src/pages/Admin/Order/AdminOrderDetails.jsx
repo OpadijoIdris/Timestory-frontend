@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAdminOrderDetails, updateOrderStatus } from "../../../api/order.api";
+import toast from "react-hot-toast";
+
 
 const AdminOrderDetails = () => {
   const { id } = useParams();
@@ -15,8 +17,7 @@ const AdminOrderDetails = () => {
       const res = await getAdminOrderDetails(id);
       setOrder(res.data);
     } catch (err) {
-      console.error(err);
-      alert("Failed to fetch order details");
+      toast.error("Failed to fetch order details");
     } finally {
       setLoading(false);
     }
@@ -32,8 +33,7 @@ const AdminOrderDetails = () => {
       await updateOrderStatus(id, { orderStatus: newStatus });
       await fetchOrder();
     } catch (err) {
-      console.error(err);
-      alert("Failed to update order status");
+      toast.error("Failed to update order status");
     } finally {
       setStatusUpdating(false);
     }
@@ -45,8 +45,7 @@ const AdminOrderDetails = () => {
       await updateOrderStatus(id, { paymentStatus: "paid" });
       await fetchOrder();
     } catch (err) {
-      console.error(err);
-      alert("Failed to update payment status");
+      toast.error("Failed to update payment status");
     } finally {
       setPaymentUpdating(false);
     }

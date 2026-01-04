@@ -1,6 +1,7 @@
 import { addToCart } from "../../api/cart.api";
 import { useCart } from "../../context/CartContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product, onPreview }) => {
     const [quantity, setQuantity] = useState(1);
@@ -21,7 +22,7 @@ const ProductCard = ({ product, onPreview }) => {
     await updateCartCount();
     setQuantity(1);
   } catch (err) {
-    alert(
+    toast.error(
       err.response?.data?.message ||
       "Failed to add to cart"
     );

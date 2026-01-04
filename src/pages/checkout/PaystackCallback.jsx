@@ -47,7 +47,7 @@ const PaystackCallBack = () => {
           setStatus("failed");
         }
       } catch (err) {
-        console.error("Verification error:", err);
+        console.error("Verification error:", err.message || err);
         setStatus("failed");
       }
     };

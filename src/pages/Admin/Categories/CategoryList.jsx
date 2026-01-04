@@ -10,7 +10,7 @@ const CategoryList = () => {
         const data = await getCategories();
         setCategories(data);
       } catch (err) {
-        console.error(err);
+        console.error(err.message || err);
       }
     };
 
@@ -22,7 +22,7 @@ const CategoryList = () => {
       await deleteCategory(id);
       setCategories((prev) => prev.filter((cat) => cat._id !== id));
     } catch (err) {
-      console.error("Error deleting category:", err);
+      console.error("Error deleting category:", err.message || err);
     }
   };
 

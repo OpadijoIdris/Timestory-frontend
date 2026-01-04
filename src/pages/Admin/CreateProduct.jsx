@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCategories } from "../../api/category.api";
 import { createProduct, getProduct, updateProduct } from "../../api/product.api";
+import toast from "react-hot-toast";
 
 const CreateProduct = () => {
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ const CreateProduct = () => {
                 const res = await getCategories();
                 setCategories(res || []);
             } catch (err) {
-                console.error(err);
+                console.error(err.message || err);
             }
         };
 
@@ -44,8 +45,8 @@ const CreateProduct = () => {
                         category: product.category._id || product.category,
                     });
                 } catch (err) {
-                    console.error("Failed to fetch product for editing:", err);
-                    alert("Failed to load product data.");
+                    console.error("Failed to fetch product for editing:", err.message || err);
+                    toast.error("Failed to load product data.");
                 }
             }
         };
@@ -82,8 +83,8 @@ const CreateProduct = () => {
             }
             navigate("/admin/all-products");
         } catch (err) {
-            console.error(err);
-            alert(`Failed to ${isEditMode ? 'update' : 'create'} product`);
+            console.error(err.message || err);
+            toast.error(`Failed to ${isEditMode ? 'update' : 'create'} product`);
         } finally {
             setLoading(false);
         }

@@ -15,7 +15,7 @@ const UserDashboard = () => {
         const res = await getMyOrders();
         setOrders(res.data || []);
       } catch (err) {
-        console.error("Failed to fetch user orders", err);
+        console.error("Failed to fetch user orders", err.message || err);
       } finally {
         setLoading(false);
       }
