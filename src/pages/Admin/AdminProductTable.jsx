@@ -133,6 +133,7 @@ const AdminProductTable = () => {
                         src={product.images[0]}
                         alt={product.name}
                         className="h-16 w-16 object-cover rounded"
+                        loading="lazy"
                       />
                     ) : (
                       <span className="text-xs text-gray-500">No image</span>

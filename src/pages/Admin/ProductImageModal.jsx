@@ -18,6 +18,7 @@ const ProductImageModal = ({ product, onClose }) => {
               src={product.images?.[0]}
               alt={product.name}
               className="w-full h-80 object-cover rounded"
+              loading="lazy"
             />
           </div>
 

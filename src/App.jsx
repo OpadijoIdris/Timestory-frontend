@@ -4,6 +4,7 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Home from "./pages/home";
 import Navbar from "./components/layout/NavBar";
+import Footer from "./components/layout/Footer";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
@@ -140,6 +141,7 @@ function App() {
 
       </Routes>
       <Toaster position="top-right" />
+      <Footer />
     </BrowserRouter>
   );
 }

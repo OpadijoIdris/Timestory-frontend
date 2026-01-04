@@ -11,7 +11,7 @@ const ProductDetailModal = ({ product, onClose }) => {
                     <button onClick={onClose} className="text-2xl">&times;</button>
                 </div>
                 <div className="space-y-4">
-                    <img src={imageUrl} alt={product.name} className="w-full h-64 object-cover rounded-md" />
+                    <img src={imageUrl} alt={product.name} className="w-full h-64 object-cover rounded-md" loading="lazy" />
                     <div>
                         <h3 className="font-semibold">Description</h3>
                         <p>{product.description}</p>

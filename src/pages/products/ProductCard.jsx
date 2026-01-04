@@ -41,6 +41,7 @@ const ProductCard = ({ product, onPreview }) => {
             alt={product.name}
             onClick={onPreview}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">

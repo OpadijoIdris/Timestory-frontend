@@ -37,7 +37,7 @@ const ProductDetailPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <img src={imageUrl} alt={product.name} className="w-full h-auto object-cover rounded-lg shadow-md" />
+                    <img src={imageUrl} alt={product.name} className="w-full h-auto object-cover rounded-lg shadow-md" loading="lazy" />
                 </div>
                 <div className="space-y-4">
                     <div>

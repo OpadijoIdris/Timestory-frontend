@@ -25,6 +25,7 @@ const ProductModal = ({ product, onClose }) => {
               src={imageUrl}
               alt={product.name}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           ) : (
             <div className="flex items-center justify-center h-full text-gray-400">
